@@ -5,4 +5,4 @@ alias grun='java org.antlr.v4.gui.TestRig'
 
 antlr4 ./src/MiniJava.g4 -visitor
 
-javac -s ./ -d ./out/production/ ./src/*.java
+javac -s ./ -d ./out/production/ ./src/**/*.java

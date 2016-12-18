@@ -1,23 +1,32 @@
 grammar MiniJava;
 
 goal
+    : program
+    ;
+
+program
     : mainClass ( classDeclaration )* EOF
     ;
 
 mainClass
-    : 'class' Identifier '{' 'public' 'static' 'void' 'main' '(' 'String' '[' ']' Identifier ')' '{'statement '}' '}'
+    : 'class' name=Identifier '{' 'public' 'static' 'void' 'main' '(' 'String' '[' ']' Identifier ')' '{'statement '}' '}'
     ;
 
 classDeclaration
-    : 'class' Identifier ('extends' Identifier)? '{' (varDeclaration)* (methodDeclaration)* '}'
+    : 'class' name=Identifier ('extends' ext=Identifier)? '{' (varDeclaration)* (methodDeclaration)* '}'
     ;
 
 varDeclaration
-    : type Identifier ';'
+    : type name=Identifier ';'
     ;
 
 methodDeclaration
-    : 'public' type Identifier '(' (type Identifier ( ',' type Identifier )* )? ')' '{' (varDeclaration)* (statement)* 'return' expression ';' '}'
+    : 'public' returnType=type name=Identifier '(' parameter? ')' '{' (varDeclaration)* (statement)* 'return' expression ';' '}'
+    ;
+
+parameter
+    : parameterType=type name=Identifier
+    | parameterType=type name=Identifier ',' parameter
     ;
 
 type
