@@ -8,8 +8,11 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 public class MiniJava {
 
+    private static boolean hasError = false;
+
     public static void printError(Token token, String message) {
         System.err.printf("Error, line %d:%d %s\n", token.getLine(), token.getCharPositionInLine(), message);
+        hasError = true;
     }
 
     public static void main(String[] args) throws Exception {
@@ -31,12 +34,19 @@ public class MiniJava {
         }
         //definitionListener.getProgram().debug("");
 
-        
+        StatementListener statementListener = new StatementListener(definitionListener.getProgram(),
+                new ExpressionTypeEvaluator(definitionListener.getProgram()));
+
+        treeWalker.walk(statementListener, tree);
 
         if (args.length > 0 && args[0].equals("-tree")) {
             Trees.inspect(tree, parser);
         }
-        System.err.printf("Successfully compiled\n");
+        if (!hasError) {
+            System.err.printf("Successfully compiled\n");
+        } else {
+            System.err.printf("Failed to compile\n");
+        }
     }
 
 }

@@ -32,7 +32,7 @@ public class ExpressionTypeEvaluator {
                 if (currentMethod.getVariableByName(variableName) != null) {
                     return currentMethod.getVariableByName(variableName).getVariableType();
                 }
-                return currentClass.getVariableByName(variableName).getVariableType();
+                return null;
             }
             return null;
         }
@@ -41,6 +41,9 @@ public class ExpressionTypeEvaluator {
         }
         if (ctx.newIntArray() != null) {
             String addressType = visitExpression(ctx.newIntArray().expression(), currentClass, currentMethod);
+            if (addressType == null) {
+                return null;
+            }
             if (!Objects.equals(addressType, "int")) {
                 MiniJava.printError(ctx.newIntArray().expression().getStart(),
                         "Invalid address, is not int");
@@ -51,27 +54,43 @@ public class ExpressionTypeEvaluator {
         if (ctx.Operator() != null) {
             String type1 = visitExpression(ctx.exp1, currentClass, currentMethod);
             String type2 = visitExpression(ctx.exp2, currentClass, currentMethod);
-            if (!Objects.equals("int", type1) && !Objects.equals("boolean", type1)) {
-                MiniJava.printError(ctx.exp1.getStart(), "binary operation must be int or boolean");
-                return null;
-            }
-            if (!Objects.equals("int", type2) && !Objects.equals("boolean", type2)) {
-                MiniJava.printError(ctx.exp2.getStart(), "binary operation must be int or boolean");
+
+            if (type1 == null || type2 == null) {
                 return null;
             }
             if (!Objects.equals(type1, type2)) {
                 MiniJava.printError(ctx.getStart(), "Incompatible type: " + type1 + ", " + type2);
                 return null;
             }
-            return type1;
+
+            String operator = ctx.Operator().getText();
+            if (operator.equals("&&")) {
+                if (!type1.equals("boolean") || !type2.equals("boolean")) {
+                    MiniJava.printError(ctx.getStart(), "left and right must both be boolean for &&");
+                    return null;
+                }
+                return "boolean";
+            } else {
+                if (!type1.equals("int") || !type2.equals("int")) {
+                    MiniJava.printError(ctx.getStart(), "left and right must both be integer " +
+                            "for binary operator");
+                }
+                return operator.equals("<") ? "boolean" : "int";
+            }
         }
         if (ctx.address() != null) {
             String expressionType = visitExpression(ctx.exp, currentClass, currentMethod);
+            if (expressionType == null) {
+                return null;
+            }
             if (!Objects.equals(expressionType, "int")) {
                 MiniJava.printError(ctx.exp.getStart(), "Array value must be int[]");
                 return null;
             }
             String addressType = visitExpression(ctx.address().expression(), currentClass, currentMethod);
+            if (addressType == null) {
+                return null;
+            }
             if (!Objects.equals(addressType, "int")) {
                 MiniJava.printError(ctx.address().getStart(), "Address must be int");
                 return null;
@@ -80,6 +99,9 @@ public class ExpressionTypeEvaluator {
         }
         if (ctx.length() != null) {
             String expressionType = visitExpression(ctx.exp, currentClass, currentMethod);
+            if (expressionType == null) {
+                return null;
+            }
             if (!Objects.equals(expressionType, "int")) {
                 MiniJava.printError(ctx.exp.getStart(), "Array value must be int[]");
                 return null;
@@ -88,6 +110,9 @@ public class ExpressionTypeEvaluator {
         }
         if (ctx.call() != null) {
             String className = visitExpression(ctx.exp, currentClass, currentMethod);
+            if (className == null) {
+                return null;
+            }
             if (Objects.equals(className, "int") ||
                     Objects.equals(className, "int[]") ||
                     Objects.equals(className, "boolean")) {
@@ -102,8 +127,12 @@ public class ExpressionTypeEvaluator {
             }
             Method callingMethod = callingClass.getMethodByName(ctx.call().Identifier().getText());
             ArrayList<String> expressionTypes = new ArrayList<>();
-            for (int i = 0; i < ctx.expression().size(); ++i) {
-                expressionTypes.add(visitExpression(ctx.expression(i), currentClass, currentMethod));
+            for (int i = 0; i < ctx.call().expression().size(); ++i) {
+                String expressionType = visitExpression(ctx.call().expression(i), currentClass, currentMethod);
+                if (expressionType == null) {
+                    return null;
+                }
+                expressionTypes.add(expressionType);
             }
             if (expressionTypes.size() != callingMethod.getParameters().size()) {
                 MiniJava.printError(ctx.call().getStart(), "The parameters number is not matched");
@@ -112,7 +141,7 @@ public class ExpressionTypeEvaluator {
             for (int i = 0; i < expressionTypes.size(); ++i) {
                 if (!Objects.equals(expressionTypes.get(i), callingMethod.getParameters().get(i))) {
                     MiniJava.printError(ctx.expression(i).getStart(), "The " + String.valueOf(i)
-                        + "th parameter type is not matched, defined method type : " +
+                        + "-th parameter type is not matched, defined method type : " +
                         callingMethod.getParameters().get(i) + ", while current is : " + expressionTypes.get(i));
                     return null;
                 }
@@ -121,6 +150,9 @@ public class ExpressionTypeEvaluator {
         }
         if (ctx.not() != null) {
             String expressionType = visitExpression(ctx.exp, currentClass, currentMethod);
+            if (expressionType == null) {
+                return null;
+            }
             if (!Objects.equals(expressionType, "boolean")) {
                 MiniJava.printError(ctx.not().getStart(), "Not function must be applied to boolean," +
                         " while it's " + expressionType);

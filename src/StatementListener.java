@@ -21,9 +21,9 @@ public class StatementListener extends MiniJavaBaseListener {
     @Override
     public void enterIfStatement(MiniJavaParser.IfStatementContext ctx) {
         String type = typeEvaluator.visitExpression(ctx.expression(), currentClass, currentMethod);
-        if (!type.equals("int") && !type.equals("boolean")) {
+        if (type != null && !type.equals("boolean")) {
             MiniJava.printError(ctx.expression().getStart(),
-                    "neither if statement expression boolean or int");
+                    "Must be boolean in in if statement");
         }
     }
 
@@ -39,18 +39,18 @@ public class StatementListener extends MiniJavaBaseListener {
     @Override
     public void enterWhileStatement(MiniJavaParser.WhileStatementContext ctx) {
         String type = typeEvaluator.visitExpression(ctx.expression(), currentClass, currentMethod);
-        if (!type.equals("int") && !type.equals("boolean")) {
+        if (type != null && !type.equals("boolean")) {
             MiniJava.printError(ctx.expression().getStart(),
-                    "neither if statement expression boolean or int");
+                    "Must be boolean in while statement");
         }
     }
 
     @Override
     public void enterPrintStatement(MiniJavaParser.PrintStatementContext ctx) {
         String type = typeEvaluator.visitExpression(ctx.expression(), currentClass, currentMethod);
-        if (!type.equals("int")) {
+        if (type != null && !Objects.equals("int", type)) {
             MiniJava.printError(ctx.expression().getStart(),
-                    "neither if statement expression boolean or int");
+                    "System.out.print must be applied to `int`");
         }
     }
 
@@ -61,7 +61,7 @@ public class StatementListener extends MiniJavaBaseListener {
             MiniJava.printError(ctx.Identifier().getSymbol(), "Variable not defined yet");
         }
         String expressionType = typeEvaluator.visitExpression(ctx.expression(), currentClass, currentMethod);
-        if (!Objects.equals(expressionType, variableType)) {
+        if (expressionType != null && !Objects.equals(expressionType, variableType)) {
             MiniJava.printError(ctx.expression().getStart(), "Incompatible type " +
                     "variable is " + variableType + " expression is " + expressionType);
         }
@@ -74,11 +74,11 @@ public class StatementListener extends MiniJavaBaseListener {
             MiniJava.printError(ctx.Identifier().getSymbol(), "Variable not defined yet");
         }
         String addressType = typeEvaluator.visitExpression(ctx.address().expression(), currentClass, currentMethod);
-        if (!addressType.equals("int")) {
+        if (addressType != null && !addressType.equals("int")) {
             MiniJava.printError(ctx.address().getStart(), "Invalid array, address is not int");
         }
         String expressionType = typeEvaluator.visitExpression(ctx.expression(), currentClass, currentMethod);
-        if (!Objects.equals(expressionType, variableType)) {
+        if (expressionType != null && (!variableType.equals("int[]") || !expressionType.equals("int"))) {
             MiniJava.printError(ctx.expression().getStart(), "Incompatible type " +
                     "variable is " + variableType + " expression is " + expressionType);
         }
