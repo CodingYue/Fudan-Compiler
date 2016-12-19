@@ -64,9 +64,51 @@ public interface MiniJavaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(MiniJavaParser.StatementContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#call}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCall(MiniJavaParser.CallContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#address}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAddress(MiniJavaParser.AddressContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link MiniJavaParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitExpression(MiniJavaParser.ExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#length}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLength(MiniJavaParser.LengthContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#not}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNot(MiniJavaParser.NotContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAtom(MiniJavaParser.AtomContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#newClass}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNewClass(MiniJavaParser.NewClassContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#newIntArray}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNewIntArray(MiniJavaParser.NewIntArrayContext ctx);
 }

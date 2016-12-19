@@ -110,6 +110,28 @@ public class DefinitionListener extends MiniJavaBaseListener {
         currentDepth = "class";
     }
 
+    /*
+    @Override
+    public void enterExpression(MiniJavaParser.ExpressionContext ctx) {
+        String type = "";
+        if (ctx.atom() != null) {
+            type = "Atom";
+        } else if (ctx.address() != null) {
+            type = "Array";
+        } else if (ctx.Operator() != null) {
+            type = "Operator";
+        } else if (ctx.length() != null) {
+            type = "Length";
+        } else if (ctx.call() != null) {
+            type = "Call";
+        } else if (ctx.newClass() != null) {
+            type = "newClass";
+        } else if (ctx.newIntArray() != null) {
+            type = "newIntArray";
+        }
+        System.out.printf("Type : %s, %s\n", type, ctx.getText());
+    }*/
+
     public Program getProgram() {
         return this.program;
     }

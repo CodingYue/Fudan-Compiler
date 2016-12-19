@@ -45,25 +45,70 @@ statement
     | Identifier '[' expression ']' '=' expression ';'
     ;
 
-expression
-    : expression ('&&' | '<' | '+' | '-' | '*') expression
-    | expression '[' expression ']'
-    | expression '.' 'length'
-    | expression '.' Identifier '(' ( expression ( ',' expression )* )? ')'
-    | Digit+
-    | 'true'
-    | 'false'
-    | 'this'
-    | 'new' 'int' '[' expression ']'
-    | 'new' Identifier '(' ')'
-    | '!' expression
-    | '(' expression ')'
-    | Identifier
+call
+    : '.' Identifier '(' ( expression ( ',' expression )* )? ')'
+    ;
+
+address
+    : '[' expression ']'
     ;
 
 Identifier
     : Alphabet (Alphabet|Digit|'_')*
     ;
+expression
+    : atom
+    | newClass
+    | newIntArray
+    | expression Operator expression
+    | expression address
+    | expression length
+    | expression call
+    | not expression
+    | '(' expression ')'
+    ;
+
+Operator
+    : ('&&' | '<' | '+' | '-' | '*')
+    ;
+
+length
+    : '.' 'length'
+    ;
+
+not
+    :'!'
+    ;
+
+
+atom
+    :Integer
+    | Boolean
+    | This
+    | Identifier
+    ;
+
+newClass
+    : 'new' Identifier '(' ')'
+    ;
+
+newIntArray
+    :  'new' 'int' '[' expression ']'
+    ;
+
+Integer
+    : Digit+
+    ;
+
+Boolean
+    : 'true'
+    | 'false'
+    ;
+
+This
+    : 'this'
+    ;
+
 
 Alphabet
     : Lowercase
