@@ -1,4 +1,4 @@
-package Defination;
+package Definition;
 
 import java.util.TreeMap;
 
@@ -7,19 +7,27 @@ import java.util.TreeMap;
  */
 public class Class {
     private String className;
-    private String parentClass;
+    private Class parentClass;
     private TreeMap<String, Variable> variables;
     private TreeMap<String, Method> methods;
 
-    public Class(String className, String parentClass) {
+    public Class(String className, Class parentClass) {
         this.className = className;
         this.parentClass = parentClass;
         this.variables = new TreeMap<>();
         this.methods = new TreeMap<>();
+
+        for (Class extendsClass = parentClass; extendsClass != null; extendsClass = extendsClass.parentClass) {
+            if (extendsClass == this) {
+                break;
+            }
+            this.variables.putAll(extendsClass.variables);
+            this.methods.putAll(extendsClass.methods);
+        }
     }
 
     public Class(String className) {
-        this(className, "");
+        this(className, null);
     }
 
     public Variable getVariableByName(String variableName) {
@@ -34,7 +42,7 @@ public class Class {
         return className;
     }
 
-    public String getParentClass() {
+    public Class getParentClass() {
         return parentClass;
     }
 
@@ -44,5 +52,16 @@ public class Class {
 
     public void addMethod(Method method) {
         methods.put(method.getMethodName(), method);
+    }
+
+    public void debug(String indents) {
+        System.out.printf("%sClass : %s, ", indents, this.getClassName());
+        System.out.printf("Extends Class : %s\n", parentClass == null ? "null" : parentClass.getClassName());
+        for (Variable variable : variables.values()) {
+            variable.debug(indents + "  ");
+        }
+        for (Method method : methods.values()) {
+            method.debug(indents + "  ");
+        }
     }
 }

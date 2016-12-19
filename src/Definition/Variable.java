@@ -1,4 +1,4 @@
-package Defination;
+package Definition;
 
 /**
  * Created by yue on 12/18/16.
@@ -22,10 +22,16 @@ public class Variable {
     public String getVariableReference() {
         return variableReference;
     }
+
     public String getVariableName() {
         return variableName;
     }
+
     public String getVariableType() {
         return variableType;
+    }
+
+    public void debug(String indents) {
+        System.out.printf("%sVariable name = %s, type = %s\n", indents, variableName, variableType);
     }
 }

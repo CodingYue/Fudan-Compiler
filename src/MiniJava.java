@@ -1,4 +1,4 @@
-import org.antlr.v4.parse.ANTLRLexer;
+import Definition.Class;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Token;
@@ -13,6 +13,7 @@ public class MiniJava {
     }
 
     public static void main(String[] args) throws Exception {
+
         ANTLRInputStream inputStream = new ANTLRInputStream(System.in);
         MiniJavaLexer lexer = new MiniJavaLexer(inputStream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -20,11 +21,21 @@ public class MiniJava {
         ParseTree tree = parser.program();
 
         ParseTreeWalker treeWalker = new ParseTreeWalker();
-        MiniJavaBaseListener miniJavaBaseListener = new MiniJavaBaseListener();
-        treeWalker.walk(miniJavaBaseListener, tree);
+        DefinitionListener definitionListener = new DefinitionListener();
+        treeWalker.walk(definitionListener, tree);
+
+        Class extendsRingClass = definitionListener.getProgram().getExtendsRingName();
+        if (extendsRingClass != null) {
+            System.err.printf("Extends ring exists! class name %s\n", extendsRingClass.getClassName());
+            return;
+        }
+
+        definitionListener.getProgram().debug("");
 
         if (args.length > 0 && args[0].equals("-tree")) {
             Trees.inspect(tree, parser);
         }
+        System.err.printf("Successfully compiled\n");
     }
+
 }

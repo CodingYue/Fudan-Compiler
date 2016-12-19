@@ -1,6 +1,4 @@
-package Defination;
-
-import org.antlr.v4.runtime.misc.Pair;
+package Definition;
 
 import java.util.ArrayList;
 import java.util.TreeMap;
@@ -39,5 +37,17 @@ public class Method {
 
     public void addParameter(String parameter) {
         parameters.add(parameter);
+    }
+
+    public void debug(String indents) {
+        System.out.printf("%sMethod name = %s, return type = %s, ", indents, methodName, returnType);
+        System.out.printf("parameter type list: (");
+        for (String parameter : parameters) {
+            System.out.printf("%s, ", parameter);
+        }
+        System.out.printf(")\n");
+        for (Variable variable : variables.values()) {
+            variable.debug(indents + "  ");
+        }
     }
 }

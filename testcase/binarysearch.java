@@ -7,7 +7,14 @@ class BinarySearch{
 // methods to initialize, print and search the array
 // using Binary Search
 
-class BS{
+class HAHA {
+	int fuck;
+	public int Starts() {
+		return 0;
+	}
+}
+
+class BS extends HAHA{
     int[] number ;
     int size ;
 

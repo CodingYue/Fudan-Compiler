@@ -1,14 +1,12 @@
-import Defination.Class;
-import Defination.Method;
-import Defination.Program;
-import Defination.Variable;
-
-import java.util.ArrayList;
+import Definition.Class;
+import Definition.Method;
+import Definition.Program;
+import Definition.Variable;
 
 /**
  * Created by yue on 12/18/16.
  */
-public class DefinationListener extends MiniJavaBaseListener {
+public class DefinitionListener extends MiniJavaBaseListener {
 
     private Program program;
     private String currentClassName;
@@ -22,10 +20,12 @@ public class DefinationListener extends MiniJavaBaseListener {
         currentMethodName = null;
         currentDepth = "program";
     }
+
     @Override
     public void exitProgram(MiniJavaParser.ProgramContext ctx) {
 
     }
+
     @Override
     public void enterMainClass(MiniJavaParser.MainClassContext ctx) {
         currentDepth = "mainClass";
@@ -45,13 +45,16 @@ public class DefinationListener extends MiniJavaBaseListener {
         if (program.getClassByName(currentClassName) != null) {
             MiniJava.printError(ctx.name, "class already exists!");
         } else {
-            program.addClass(new Class(ctx.name.getText(), ctx.ext.getText()));
+            program.addClass(new Class(ctx.name.getText(),
+                    ctx.ext == null ? null : program.getClassByName(ctx.ext.getText())));
         }
     }
+
     @Override
     public void exitClassDeclaration(MiniJavaParser.ClassDeclarationContext ctx) {
         currentDepth = "program";
     }
+
     @Override
     public void enterVarDeclaration(MiniJavaParser.VarDeclarationContext ctx) {
         String variableName = ctx.name.getText();
@@ -60,7 +63,7 @@ public class DefinationListener extends MiniJavaBaseListener {
             if (currentClass.getVariableByName(variableName) == null) {
                 currentClass.addVariables(new Variable(variableName, ctx.type().getText()));
             } else {
-                MiniJava.printError(ctx.name, "Variable was already defined in this class.");
+                MiniJava.printError(ctx.name, "Variable was already defined in this class or extended class.");
             }
         } else {
             Method currentMethod = program.getClassByName(currentClassName)
@@ -72,6 +75,7 @@ public class DefinationListener extends MiniJavaBaseListener {
             }
         }
     }
+
     @Override
     public void exitVarDeclaration(MiniJavaParser.VarDeclarationContext ctx) {
 
@@ -82,7 +86,7 @@ public class DefinationListener extends MiniJavaBaseListener {
         currentMethodName = ctx.name.getText();
         Class currentClass = program.getClassByName(currentClassName);
         if (currentClass.getMethodByName(currentMethodName) != null) {
-            MiniJava.printError(ctx.name, "Method was already defined in this class.");
+            MiniJava.printError(ctx.name, "Method was already defined in this class or extended class.");
         } else {
             currentClass.addMethod(new Method(currentMethodName, ctx.returnType.getText()));
         }
@@ -97,12 +101,16 @@ public class DefinationListener extends MiniJavaBaseListener {
                 currentMethod.addVariables(new Variable(parametersContext.name.getText(),
                         parametersContext.parameterType.getText()));
             }
-            currentMethod.addParameter(parametersContext.name.getText());
+            currentMethod.addParameter(parametersContext.parameterType.getText());
         }
     }
+
     @Override
     public void exitMethodDeclaration(MiniJavaParser.MethodDeclarationContext ctx) {
         currentDepth = "class";
     }
 
+    public Program getProgram() {
+        return this.program;
+    }
 }
