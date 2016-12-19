@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="73c13605-115d-409b-8f99-05fc42504398" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ExpressionTypeEvaluator.java" afterPath="$PROJECT_DIR$/src/ExpressionTypeEvaluator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MiniJava.java" afterPath="$PROJECT_DIR$/src/MiniJava.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/StatementListener.java" afterPath="$PROJECT_DIR$/src/StatementListener.java" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -985,12 +982,12 @@
       <workItem from="1482041101414" duration="1108000" />
       <workItem from="1482055883715" duration="11558000" />
       <workItem from="1482120803888" duration="26000" />
-      <workItem from="1482120844129" duration="21077000" />
+      <workItem from="1482120844129" duration="21154000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37956000" />
+    <option name="totallyTimeSpent" value="38033000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="1922" height="1057" extended-state="6" />
