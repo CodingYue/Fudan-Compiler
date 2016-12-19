@@ -29,8 +29,9 @@ public class MiniJava {
             System.err.printf("Extends ring exists! class name %s\n", extendsRingClass.getClassName());
             return;
         }
+        //definitionListener.getProgram().debug("");
 
-        definitionListener.getProgram().debug("");
+        
 
         if (args.length > 0 && args[0].equals("-tree")) {
             Trees.inspect(tree, parser);

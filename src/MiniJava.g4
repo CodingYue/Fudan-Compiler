@@ -38,11 +38,31 @@ type
 
 statement
     : '{' (statement)* '}'
-    | 'if' '(' expression ')' statement 'else' statement
-    | 'while' '(' expression ')' statement
-    | 'System.out.println' '(' expression ')' ';'
-    | Identifier '=' expression ';'
-    | Identifier '[' expression ']' '=' expression ';'
+    | ifStatement
+    | whileStatement
+    | printStatement
+    | assignStatement
+    | arrayAssignStatement
+    ;
+
+ifStatement
+    : 'if' '(' expression ')' statement 'else' statement
+    ;
+
+whileStatement
+    : 'while' '(' expression ')' statement
+    ;
+
+printStatement
+    : 'System.out.println' '(' expression ')' ';'
+    ;
+
+assignStatement
+    : Identifier '=' expression ';'
+    ;
+
+arrayAssignStatement
+    : Identifier address '=' expression ';'
     ;
 
 call
@@ -60,12 +80,12 @@ expression
     : atom
     | newClass
     | newIntArray
-    | expression Operator expression
-    | expression address
-    | expression length
-    | expression call
-    | not expression
-    | '(' expression ')'
+    | exp1=expression Operator exp2=expression
+    | exp=expression address
+    | exp=expression length
+    | exp=expression call
+    | not exp=expression
+    | '(' exp=expression ')'
     ;
 
 Operator
@@ -82,7 +102,7 @@ not
 
 
 atom
-    :Integer
+    : Integer
     | Boolean
     | This
     | Identifier

@@ -97,6 +97,56 @@ public interface MiniJavaListener extends ParseTreeListener {
 	 */
 	void exitStatement(MiniJavaParser.StatementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#ifStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfStatement(MiniJavaParser.IfStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#ifStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfStatement(MiniJavaParser.IfStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#whileStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhileStatement(MiniJavaParser.WhileStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#whileStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhileStatement(MiniJavaParser.WhileStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#printStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrintStatement(MiniJavaParser.PrintStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#printStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrintStatement(MiniJavaParser.PrintStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#assignStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignStatement(MiniJavaParser.AssignStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#assignStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignStatement(MiniJavaParser.AssignStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#arrayAssignStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterArrayAssignStatement(MiniJavaParser.ArrayAssignStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#arrayAssignStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitArrayAssignStatement(MiniJavaParser.ArrayAssignStatementContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MiniJavaParser#call}.
 	 * @param ctx the parse tree
 	 */

@@ -31,6 +31,10 @@ public class Method {
         return variables.get(variableName);
     }
 
+    public ArrayList<String> getParameters() {
+        return parameters;
+    }
+
     public void addVariables(Variable variable) {
         variables.put(variable.getVariableName(), variable);
     }
