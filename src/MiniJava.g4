@@ -154,3 +154,7 @@ WS
 LineComment
     : '//' ~[\r\n]* -> skip
     ;
+
+BlockComment
+	: '/*' (BlockComment | ~[*/] | '/' ~[*] | '*' ~[/] )* '*/' -> skip
+	;

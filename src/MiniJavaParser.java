@@ -21,7 +21,7 @@ public class MiniJavaParser extends Parser {
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
 		T__24=25, T__25=26, T__26=27, Identifier=28, Operator=29, Integer=30, 
 		Boolean=31, This=32, Alphabet=33, Lowercase=34, Uppercase=35, Digit=36, 
-		WS=37, LineComment=38;
+		WS=37, LineComment=38, BlockComment=39;
 	public static final int
 		RULE_goal = 0, RULE_program = 1, RULE_mainClass = 2, RULE_classDeclaration = 3, 
 		RULE_varDeclaration = 4, RULE_methodDeclaration = 5, RULE_parameter = 6, 
@@ -47,7 +47,8 @@ public class MiniJavaParser extends Parser {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, "Identifier", "Operator", "Integer", "Boolean", 
-		"This", "Alphabet", "Lowercase", "Uppercase", "Digit", "WS", "LineComment"
+		"This", "Alphabet", "Lowercase", "Uppercase", "Digit", "WS", "LineComment", 
+		"BlockComment"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -1689,7 +1690,7 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3(\u00ff\4\2\t\2\4"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3)\u00ff\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\3\2\3\2\3\3\3\3\7\3"+

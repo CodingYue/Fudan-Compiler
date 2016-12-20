@@ -1,0 +1,15 @@
+class Expression {
+	public static void main(String[] a){
+		System.out.println(new Exp().value());
+	}
+}
+
+class Exp {
+	public int value() {
+		int a;
+		int b;
+		int c;
+		c = a + b;
+		return c;
+	}
+}

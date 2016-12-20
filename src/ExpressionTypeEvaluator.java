@@ -116,14 +116,18 @@ public class ExpressionTypeEvaluator {
             if (Objects.equals(className, "int") ||
                     Objects.equals(className, "int[]") ||
                     Objects.equals(className, "boolean")) {
-                MiniJava.printError(ctx.exp.getStart(), "Cannot apply calling method to " +
-                    className);
+                MiniJava.printError(ctx.exp.getStart(), "Cannot apply calling method to `" +
+                    className + "`");
                 return null;
             }
             Class callingClass = program.getClassByName(className);
+            if (callingClass == null) {
+                MiniJava.printError(ctx.exp.getStart(), "Class `" + className + "` doesn't exist");
+                return null;
+            }
             if (callingClass.getMethodByName(ctx.call().Identifier().getText()) == null) {
                 MiniJava.printError(ctx.call().Identifier().getSymbol(),
-                        "Method not found in class " + className);
+                        "Method not found in class `" + className + "`");
             }
             Method callingMethod = callingClass.getMethodByName(ctx.call().Identifier().getText());
             ArrayList<String> expressionTypes = new ArrayList<>();

@@ -36,6 +36,7 @@ Uppercase=35
 Digit=36
 WS=37
 LineComment=38
+BlockComment=39
 'class'=1
 '{'=2
 'public'=3
